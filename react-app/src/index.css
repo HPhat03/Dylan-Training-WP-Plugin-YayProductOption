@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+#ypo-admin-page {
+    color: green;
+    height: 50px;
+    width: 250px;
+}

@@ -13,8 +13,13 @@ function ypo_add_admin_menu() {
 }
 
 function ypo_enqueue_admin_app() {
-    wp_enqueue_script("ypo-asdas", YPO_PLUGIN_URL . '/build/index.js');
-    wp_enqueue_style("ypo-asdas", YPO_PLUGIN_URL . '/build/index.css');
+    $asset_file = include YPO_PLUGIN_PATH . 'build/index.asset.php';
+
+    wp_enqueue_script("ypo-asdas", YPO_PLUGIN_URL . '/build/index.js', $asset_file['dependencies'],
+    $asset_file['version']);
+    wp_enqueue_style("ypo-asdas", YPO_PLUGIN_URL . '/build/index.css', [],
+    $asset_file['version']);
+    
     wp_localize_script("ypo-asdas", "ypoData", [
         "nonce" => wp_create_nonce("wp_rest")
     ]);

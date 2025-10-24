@@ -1,0 +1,25 @@
+{
+  "name": "react-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "devDependencies": {
+    "@wordpress/scripts": "^24.0.0"
+  },
+  "scripts": {
+    "build": "wp-scripts build --output-path=../build",
+    "format": "wp-scripts format",
+    "lint:js": "wp-scripts lint-js",
+    "packages-update": "wp-scripts packages-update",
+    "start": "wp-scripts start --output-path=../build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.18.3",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.16",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.16"
+  }
+}
