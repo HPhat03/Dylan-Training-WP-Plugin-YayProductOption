@@ -4,7 +4,7 @@
 // Tối thiểu header-requirement phải có Plugin Name
 
 /**
- * Plugin Name: Contact Plugin 1
+ * Plugin Name: Training WP Plugin - Yay Product Options
  * Description: This is my first test plugin
  * Version: 1.0.0
  * Text Domain: contact-plugin
