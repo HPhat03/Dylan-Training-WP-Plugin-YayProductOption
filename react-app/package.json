@@ -6,8 +6,7 @@
   "devDependencies": {
     "@wordpress/scripts": "^24.0.0",
     "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.16"
+    "postcss": "^8.5.6"
   },
   "scripts": {
     "build": "wp-scripts build --output-path=../build",
@@ -22,6 +21,9 @@
   "packageManager": "pnpm@10.18.3",
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.16",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.16",
     "zod": "^4.1.12"
   }
 }

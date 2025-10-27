@@ -20,6 +20,7 @@ if ( !defined('ABSPATH') ) {
 
 define("YPO_PLUGIN_PATH", plugin_dir_path(__FILE__) );
 define("YPO_PLUGIN_URL", plugin_dir_url(__FILE__) );
+define("POST_TYPE_PRODUCT", "product");
 
 function ypo_activate_plugin() {
 }
@@ -28,7 +29,7 @@ function ypo_deactivate_plugin() {
 }
 
 function ypo_load_plugin() {
-    // require_once YPO_PLUGIN_PATH . "includes/rest-api-controller.php";
+    require_once YPO_PLUGIN_PATH . "includes/rest-api-controller.php";
     require_once YPO_PLUGIN_PATH . "includes/admin-menu.php";
     // require_once YPO_PLUGIN_PATH . "includes/extends-woo-product.php";
     // require_once YPO_PLUGIN_PATH . "includes/extends-woo-order.php";

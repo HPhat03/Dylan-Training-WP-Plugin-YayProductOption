@@ -117,10 +117,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function MyFirstApp() {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const contextData = window.ypoData;
+    const nonce = contextData.nonce;
+    console.log(nonce);
+    fetch("/wordpress/wp-json/api/products/", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce // Gửi nonce để xác thực user
+      },
+      credentials: 'same-origin'
+    }).then(response => response.json).then(data => {
+      document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    }).catch(error => {
+      document.getElementById('result').textContent = 'Lỗi: ' + error.message;
+    });
+  }, []);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", {
-    class: "text-3xl font-bold underline text-red-500"
-  }, "Hello world!"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Hello from JavaScript!"), ";");
+    className: "text-3xl font-bold underline text-red-500"
+  }, "Hello world!"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "text-red-500 cursor-pointer"
+  }, "Hello from JavaScript!"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("pre", {
+    id: "result"
+  }));
 }
 window.addEventListener('load', function () {
   const root = (0,react_dom__WEBPACK_IMPORTED_MODULE_1__.createRoot)(document.getElementById('ypo-admin-page'));
