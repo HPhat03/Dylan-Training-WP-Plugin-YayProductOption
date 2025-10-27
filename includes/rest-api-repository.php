@@ -15,18 +15,14 @@ function ypo_get_product($id = null){
                     AND pm.meta_key = %s
             WHERE 
                 p.post_type =  %s
-                AND NOT ( 
-                    p.post_title = ''
-                    OR p.post_title = %s
-                    OR p.post_title IS NULL
-                )
+                AND p.post_status = 'publish'
             ";
     if ($id != null) {
         $sql .= " AND p.ID = %s";
-        $prepare_statement = $wpdb->prepare($sql, "_product_attributes", POST_TYPE_PRODUCT, "AUTO-DRAFT", $id);
+        $prepare_statement = $wpdb->prepare($sql, "_product_attributes", POST_TYPE_PRODUCT, $id);
     }
     else {
-        $prepare_statement = $wpdb->prepare($sql, "_product_attributes", POST_TYPE_PRODUCT, "AUTO-DRAFT");
+        $prepare_statement = $wpdb->prepare($sql, "_product_attributes", POST_TYPE_PRODUCT);
     }
     
     $result = $wpdb->get_results($prepare_statement, ARRAY_A);
@@ -59,7 +55,7 @@ function ypo_handle_data($data, $isSingle = false) {
                     $tmp_choice = [
                         "title" => $value,
                         "value" => strtolower($value),
-                        "rvalue" => strtolower($value)
+                        "color" => strtolower($value)
                     ];
                     array_push($tmp_opt["choices"], $tmp_choice);
                 }
