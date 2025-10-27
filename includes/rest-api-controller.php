@@ -16,8 +16,8 @@ function ypo_register_routes() {
         "/product",
         array(
             "methods" => WP_REST_Server::READABLE,
-            "callback" => "ypo_get_product_list"
-            // "permission_callback" => "ypo_check_permission"
+            "callback" => "ypo_get_product_list",
+            "permission_callback" => "ypo_check_permission"
         )
     );
 
@@ -26,20 +26,20 @@ function ypo_register_routes() {
         "/product/(?P<id>[\d]+)",
         array(
             "methods" => WP_REST_Server::READABLE,
-            "callback" => "ypo_get_product_with_id"
-            // "permission_callback" => "ypo_check_permission"
+            "callback" => "ypo_get_product_with_id",
+            "permission_callback" => "ypo_check_permission"
         )
     );
 
-    register_rest_route(
-        "api",
-        "/product/(?P<id>[\d]+)",
-        array(
-            "methods" => WP_REST_Server::EDITABLE,
-            "callback" => "ypo_edit_product_with_id"
-            // "permission_callback" => "ypo_check_permission"
-        )
-    );
+    // register_rest_route(
+    //     "api",
+    //     "/product/(?P<id>[\d]+)",
+    //     array(
+    //         "methods" => WP_REST_Server::EDITABLE,
+    //         "callback" => "ypo_edit_product_with_id"
+    //         // "permission_callback" => "ypo_check_permission"
+    //     )
+    // );
 }
 
 function ypo_get_product_list( $request ) {
@@ -56,11 +56,6 @@ function ypo_get_product_with_id( $request ) {
     $response = ypo_handle_data($result, true);
 
     return rest_ensure_response($response);
-}
-
-function ypo_edit_product_with_id( $request ) {
-    $id = $request["id"];
-
 }
 
 add_action("rest_api_init", "ypo_register_routes");
