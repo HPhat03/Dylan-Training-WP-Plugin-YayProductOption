@@ -5,6 +5,7 @@ use Automattic\WooCommerce\Enums\ProductStatus;
 function ypo_get_products(){
     $args = array(
         'status' => ProductStatus::PUBLISH,
+        'limit' => -1,
     );
 
     $result = wc_get_products( $args );
@@ -15,6 +16,13 @@ function ypo_get_product($id){
     $result = wc_get_product($id);
     return array($result);
 }
+
+/**
+ * add yay product options
+ * 
+ * @param WC_Product[] $data
+ * @param bool $isSingle
+ */
 function ypo_handle_data($data, $isSingle = false) {
     $response = array();
 
