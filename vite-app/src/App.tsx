@@ -1,7 +1,6 @@
-import { Button } from "@/components/ui/button";
 import "./App.css";
 import { createHashRouter, Navigate, RouterProvider } from "react-router-dom";
-import ProductList from "./components/ProductList/product-list";
+import ProductList from "@/components/ProductPage/product-page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createHashRouter([
