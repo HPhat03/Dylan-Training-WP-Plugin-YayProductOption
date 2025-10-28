@@ -1,63 +1,62 @@
-<?php 
-function ypo_get_product($id = null){
+<?php
 
-    global $wpdb;
-    $sql = " SELECT 
-                p.ID, 
-                p.post_title,
-                pm.meta_value
-            FROM 
-                wp_posts AS p
-                LEFT JOIN
-                wp_postmeta AS pm
-                ON 
-                    p.ID = pm.post_id
-                    AND pm.meta_key = %s
-            WHERE 
-                p.post_type =  %s
-                AND p.post_status = 'publish'
-            ";
-    if ($id != null) {
-        $sql .= " AND p.ID = %s";
-        $prepare_statement = $wpdb->prepare($sql, "_product_attributes", POST_TYPE_PRODUCT, $id);
-    }
-    else {
-        $prepare_statement = $wpdb->prepare($sql, "_product_attributes", POST_TYPE_PRODUCT);
-    }
-    
-    $result = $wpdb->get_results($prepare_statement, ARRAY_A);
+use Automattic\WooCommerce\Enums\ProductStatus;
+
+function ypo_get_products(){
+    $args = array(
+        'status' => ProductStatus::PUBLISH,
+    );
+
+    $result = wc_get_products( $args );
     return $result;
 }
 
+function ypo_get_product($id){
+    $result = wc_get_product($id);
+    return array($result);
+}
 function ypo_handle_data($data, $isSingle = false) {
     $response = array();
 
     foreach ($data as $product) {
         $tmp = [
             "product" => [
-                "id" => $product["ID"],
-                "name" => $product["post_title"]
+                "id" => $product->get_id(),
+                "name" => $product->get_name()
             ],
             "options" => []
         ];
 
-        if (!empty($product["meta_value"])) {
-            $option_data = unserialize($product["meta_value"]);
-            foreach ($option_data as $option) {
+        if (!empty($product->get_attributes())) {
+            $attributes = $product->get_attributes();
+            foreach ($attributes as $attr => $attr_val) {
                 $tmp_opt = [
-                    "label" => $option["name"],
-                    "displayLabel" => $option["name"],
+                    "label" => $attr,
+                    "displayLabel" => $attr,
                     "choices" => array()
                 ];
 
-                $values = explode('|',$option["value"]);
-                foreach ($values as $value) {
-                    $tmp_choice = [
-                        "title" => $value,
-                        "value" => strtolower($value),
-                        "color" => strtolower($value)
-                    ];
-                    array_push($tmp_opt["choices"], $tmp_choice);
+                if ($attr_val->is_taxonomy()) {
+                    $terms = wp_get_post_terms();
+                    foreach ($terms as $term) {
+                        $tmp_choice = [
+                            "title" => $term->name,
+                            "value" => strtolower($term->name),
+                            "color" => strtolower($attr)=="color" ? strtolower($term->name) : "black"
+                        ];
+                        array_push($tmp_opt["choices"], $tmp_choice);
+                    }
+                }
+                else {
+                    $options = $attr_val->get_options();
+                    foreach ($options as $opt) {
+                        $tmp_choice = [
+                            "title" => $opt,
+                            "value" => strtolower($opt),
+                            "color" => strtolower($attr)=="color" ? strtolower($opt) : "black"
+                        ];
+                        array_push($tmp_opt["choices"], $tmp_choice);
+                    }
                 }
 
                 array_push($tmp["options"], $tmp_opt);

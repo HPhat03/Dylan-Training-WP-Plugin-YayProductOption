@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost/wordpress/wp-json/api";
+const BASE_URL = window.ypoData.base_url;
 
 const ApiUrl = async (endpoint: string, method: string, body: any = null) => {
   const contextData = window.ypoData;

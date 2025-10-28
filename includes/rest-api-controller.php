@@ -1,5 +1,7 @@
 <?php
 
+use Automattic\WooCommerce\Enums\ProductStatus;
+
 require_once YPO_PLUGIN_PATH . "includes/rest-api-repository.php";
 
 function ypo_check_permission() {
@@ -12,22 +14,22 @@ function ypo_check_permission() {
 
 function ypo_register_routes() {
     register_rest_route(
-        "api",
+        "ypo_api",
         "/product",
         array(
             "methods" => WP_REST_Server::READABLE,
             "callback" => "ypo_get_product_list",
-            "permission_callback" => "ypo_check_permission"
+            // "permission_callback" => "ypo_check_permission"
         )
     );
 
     register_rest_route(
-        "api",
+        "ypo_api",
         "/product/(?P<id>[\d]+)",
         array(
             "methods" => WP_REST_Server::READABLE,
             "callback" => "ypo_get_product_with_id",
-            "permission_callback" => "ypo_check_permission"
+            // "permission_callback" => "ypo_check_permission"
         )
     );
 
@@ -43,14 +45,14 @@ function ypo_register_routes() {
 }
 
 function ypo_get_product_list( $request ) {
-
-    $result = ypo_get_product();
+    $result = ypo_get_products();
     $response = ypo_handle_data($result);
     
     return rest_ensure_response($response);
 }
 
 function ypo_get_product_with_id( $request ) {
+
     $id = $request["id"];
     $result = ypo_get_product($id);
     $response = ypo_handle_data($result, true);

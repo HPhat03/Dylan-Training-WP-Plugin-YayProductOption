@@ -21,6 +21,7 @@ if ( !defined('ABSPATH') ) {
 define("YPO_PLUGIN_PATH", plugin_dir_path(__FILE__) );
 define("YPO_PLUGIN_URL", plugin_dir_url(__FILE__) );
 define("POST_TYPE_PRODUCT", "product");
+define("YPO_API_NAMESPACE", "ypo_api");
 
 function ypo_activate_plugin() {
 }
