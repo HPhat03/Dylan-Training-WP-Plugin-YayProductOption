@@ -1,7 +1,5 @@
-@import "tailwindcss";
+@import "tailwindcss" source("../");
 
-#ypo-admin-page {
-    color: green;
-    height: 50px;
-    width: 250px;
-}
+span {
+    @apply bg-blue-500 text-white px-4 py-2 rounded;
+  }

@@ -22,7 +22,8 @@ function ypo_enqueue_admin_app() {
     $asset_file['version']);
     
     wp_localize_script("ypo-asdas", "ypoData", [
-        "nonce" => wp_create_nonce("wp_rest")
+        "nonce" => wp_create_nonce("wp_rest"),
+        "base_url" => esc_url( rest_url() ).YPO_API_NAMESPACE,
     ]);
 }
 
@@ -42,7 +43,8 @@ function ypo_enqueue_admin_vite_app() {
     wp_enqueue_style("ypo-admin-style", YPO_PLUGIN_URL . '/build/admin-app.css', [], '1.0.0');
 
     wp_localize_script("ypo-module-admin-app", "ypoData", [
-        "nonce" => wp_create_nonce("wp_rest")
+        "nonce" => wp_create_nonce("wp_rest"),
+        "base_url" => esc_url( rest_url() ).YPO_API_NAMESPACE,
     ]);
 }
 
