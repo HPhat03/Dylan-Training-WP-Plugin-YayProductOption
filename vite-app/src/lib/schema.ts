@@ -16,6 +16,6 @@ const productSchema = z.object({
 });
 
 export const productIncludeSchema = z.object({
-  product: z.object(productSchema),
+  product: productSchema,
   options: z.array(optionSchema),
 });
