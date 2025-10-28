@@ -157,29 +157,32 @@ const generateColumn = (data: YayProduct[]) => {
           <div>
             {colMatched.choices.map((c) => {
               const color = c.color.trim();
-              if (colMatched.label.toLowerCase() == "color") {
-                return (
-                  <Tooltip key={c.title + "_" + c.value}>
-                    <TooltipTrigger asChild>
-                      <Badge
-                        variant="outline"
-                        className="w-6 h-6 rounded-full border-dotted border-2 border-gray-950"
-                        style={{ backgroundColor: color }}
-                      />
-                    </TooltipTrigger>
-                    <TooltipContent> Color: {c.title} </TooltipContent>
-                  </Tooltip>
-                );
+              switch (colMatched.label.toLowerCase()) {
+                case "color":
+                  return (
+                    <Tooltip key={c.title + "_" + c.value}>
+                      <TooltipTrigger asChild>
+                        <Badge
+                          variant="outline"
+                          className="w-6 h-6 rounded-full border-dotted border-2 border-gray-950"
+                          style={{ backgroundColor: color }}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent> Color: {c.title} </TooltipContent>
+                    </Tooltip>
+                  );
+
+                default:
+                  return (
+                    <Badge
+                      key={c.title}
+                      variant="outline"
+                      className="px-1.5 text-green-500 border-green-500"
+                    >
+                      {c.title}
+                    </Badge>
+                  );
               }
-              return (
-                <Badge
-                  key={c.title}
-                  variant="outline"
-                  className="text-muted-foreground px-1.5"
-                >
-                  {c.title}
-                </Badge>
-              );
             })}
           </div>
         );
