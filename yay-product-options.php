@@ -22,6 +22,7 @@ define("YPO_PLUGIN_PATH", plugin_dir_path(__FILE__) );
 define("YPO_PLUGIN_URL", plugin_dir_url(__FILE__) );
 define("POST_TYPE_PRODUCT", "product");
 define("YPO_API_NAMESPACE", "ypo_api");
+define("YPO_META_NAME", "_ypo_yay_product_option");
 
 function ypo_activate_plugin() {
 }

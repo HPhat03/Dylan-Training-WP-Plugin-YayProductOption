@@ -1,7 +1,10 @@
 <?php
 
 use Automattic\WooCommerce\Enums\ProductStatus;
-
+/**
+ * Get a list of products
+ * 
+ */
 function ypo_get_products(){
     $args = array(
         'status' => ProductStatus::PUBLISH,
@@ -12,71 +15,55 @@ function ypo_get_products(){
     return $result;
 }
 
+/**
+ * Get a single product by id
+ * 
+ * @param string $id
+ */
 function ypo_get_product($id){
     $result = wc_get_product($id);
-    return array($result);
+    return $result;
 }
 
 /**
  * add yay product options
  * 
  * @param WC_Product[] $data
- * @param bool $isSingle
  */
-function ypo_handle_data($data, $isSingle = false) {
+function ypo_product_array_to_json($data) {
     $response = array();
 
     foreach ($data as $product) {
-        $tmp = [
-            "product" => [
-                "id" => $product->get_id(),
-                "name" => $product->get_name()
-            ],
-            "options" => []
-        ];
-
-        if (!empty($product->get_attributes())) {
-            $attributes = $product->get_attributes();
-            foreach ($attributes as $attr => $attr_val) {
-                $tmp_opt = [
-                    "label" => $attr,
-                    "displayLabel" => $attr,
-                    "choices" => array()
-                ];
-
-                if ($attr_val->is_taxonomy()) {
-                    $terms = wp_get_post_terms();
-                    foreach ($terms as $term) {
-                        $tmp_choice = [
-                            "title" => $term->name,
-                            "value" => strtolower($term->name),
-                            "color" => strtolower($attr)=="color" ? strtolower($term->name) : "black"
-                        ];
-                        array_push($tmp_opt["choices"], $tmp_choice);
-                    }
-                }
-                else {
-                    $options = $attr_val->get_options();
-                    foreach ($options as $opt) {
-                        $tmp_choice = [
-                            "title" => $opt,
-                            "value" => strtolower($opt),
-                            "color" => strtolower($attr)=="color" ? strtolower($opt) : "black"
-                        ];
-                        array_push($tmp_opt["choices"], $tmp_choice);
-                    }
-                }
-
-                array_push($tmp["options"], $tmp_opt);
-            }
-        }
-        if ($isSingle) {
-            return $tmp;
-        }
-        else {
-            array_push($response, $tmp);
-        }
+        $tmp = ypo_product_to_json($product);
+        array_push($response, $tmp);
     }
 
     return $response;
+}
+
+/**
+ * Yay product to json format
+ * 
+ * @param WC_Product $data
+ */
+function ypo_product_to_json($product) {
+    $tmp = [
+        "product" => [
+            "id" => $product->get_id(),
+            "name" => $product->get_name()
+        ],
+        "options" => []
+    ];
+
+    $ypo_option_meta = get_post_meta($product->get_id(), YPO_META_NAME, true);
+    $ypo_option = unserialize($ypo_option_meta);
+
+    if (isset($ypo_option) 
+        and !empty($ypo_option) 
+        and is_array($ypo_option)) 
+    {
+        $tmp["options"] = $ypo_option;
+    }
+
+    return $tmp;
 }

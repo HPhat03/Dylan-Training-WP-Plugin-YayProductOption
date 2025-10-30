@@ -1,3 +1,6 @@
+import type z from "zod";
+import type { productIncludeFormSchema } from "./schema";
+
 const BASE_URL = window.ypoData.base_url;
 
 const ApiUrl = async (endpoint: string, method: string, body: any = null) => {
@@ -23,10 +26,18 @@ const ApiUrl = async (endpoint: string, method: string, body: any = null) => {
   return response.json();
 };
 
-export const fetchProducts = async (id: string = "") => {
-  if (id) {
-    return await ApiUrl(`product/${id}`, "GET");
-  } else {
-    return await ApiUrl("product", "GET");
-  }
+export const fetchProducts = async () => {
+  return await ApiUrl("product", "GET");
+};
+
+export const fetchProduct = async (id: string | undefined) => {
+  if (id == undefined) return {};
+  return await ApiUrl(`product/${id}`, "GET");
+};
+
+export const saveProductOption = async (
+  data: z.infer<typeof productIncludeFormSchema>
+) => {
+  var id = data.product.id;
+  return await ApiUrl(`product/${id}`, "POST", JSON.stringify(data));
 };
