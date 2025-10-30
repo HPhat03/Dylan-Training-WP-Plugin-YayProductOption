@@ -35,7 +35,7 @@ const ProductTable: React.FC<IProductData> = ({ dataTable }) => {
       <TableBody className="**:data-[slot=table-cell]:first:w-8">
         {dataTable.getRowModel().rows?.length ? (
           dataTable.getRowModel().rows.map((row) => (
-            <TableRow>
+            <TableRow key={row.original.product.id}>
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}

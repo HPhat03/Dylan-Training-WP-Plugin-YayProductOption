@@ -12,6 +12,7 @@ import {
 import type { YayProduct } from "@/lib/interface";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const ProductColumn: ColumnDef<YayProduct>[] = [
   {
@@ -34,7 +35,7 @@ export const ProductColumn: ColumnDef<YayProduct>[] = [
       />
     ),
     enableSorting: false,
-    // enableHiding: false,
+    enableHiding: false,
   },
   {
     accessorKey: "product.id",
@@ -47,6 +48,18 @@ export const ProductColumn: ColumnDef<YayProduct>[] = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </div>
     ),
+    cell: ({ row }) => {
+      const navigate = useNavigate();
+      return (
+        <div
+          className="cursor-pointer hover:underline hover:font-semibold"
+          onClick={() => navigate("/options/" + row.original.product.id)}
+        >
+          {row.original.product.id}
+        </div>
+      );
+    },
+
     // enableHiding: false,
   },
   {
@@ -60,6 +73,17 @@ export const ProductColumn: ColumnDef<YayProduct>[] = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </div>
     ),
+    cell: ({ row }) => {
+      const navigate = useNavigate();
+      return (
+        <div
+          className="cursor-pointer hover:underline hover:font-semibold"
+          onClick={() => navigate("/options/" + row.original.product.id)}
+        >
+          {row.original.product.name}
+        </div>
+      );
+    },
     // enableHiding: false,
   },
   {
