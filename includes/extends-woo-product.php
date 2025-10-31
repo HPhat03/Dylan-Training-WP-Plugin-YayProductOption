@@ -10,11 +10,12 @@ function ypo_add_custom_field_in_product() {
     }
 
     $ypo_options_str = get_post_meta($product->get_id(), YPO_META_NAME, true);
-    if (!isset($ypo_options_str)) {
+    if (!isset($ypo_options_str) || empty($ypo_options_str)) {
         return;
     }
 
     $ypo_options = unserialize($ypo_options_str);
+    var_dump($ypo_options_str);
     ?>
 
 <div class="ypo_container">
@@ -70,7 +71,7 @@ function ypo_add_custom_field_in_product() {
 
 function ypo_validate_before_add_to_cart ($passed, $product_id, $quantity) {
     $ypo_options_str = get_post_meta($product_id, YPO_META_NAME, true);
-    if (!isset($ypo_options_str)) {
+    if (!isset($ypo_options_str) || empty($ypo_options_str)) {
         return;
     }
 

@@ -2,7 +2,7 @@
 
 function ypo_save_to_cart($cart_item_data, $product_id) {
     $ypo_options_str = get_post_meta($product_id, YPO_META_NAME, true);
-    if (!isset($ypo_options_str)) {
+    if (!isset($ypo_options_str) || empty($ypo_options_str)) {
         return;
     }
 
@@ -20,7 +20,7 @@ function ypo_display_cart_n_checkout($item_data, $cart_item) {
     $id = $cart_item["product_id"];
 
     $ypo_options_str = get_post_meta($id, YPO_META_NAME, true);
-    if (!isset($ypo_options_str)) {
+    if (!isset($ypo_options_str) || empty($ypo_options_str)) {
         return;
     }
 
@@ -50,7 +50,7 @@ function ypo_save_to_order($item, $cart_item_key, $values, $order) {
     $id = $values["product_id"];
 
     $ypo_options_str = get_post_meta($id, YPO_META_NAME, true);
-    if (!isset($ypo_options_str)) {
+    if (!isset($ypo_options_str) || empty($ypo_options_str)) {
         return;
     }
 
