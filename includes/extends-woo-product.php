@@ -15,47 +15,57 @@ function ypo_add_custom_field_in_product() {
     }
 
     $ypo_options = unserialize($ypo_options_str);
-    $html_str = "<div class='ypo_container'>";
+    ?>
 
-    
-    foreach ($ypo_options as $option) {
-        $html_str .= "<div class='ypo_option_container' >";
+<div class="ypo_container">
+        <?php foreach ($ypo_options as $option): ?>
+            <?php
+                $name = "ypo_" . $option['label'];
+                $displayLabel = $option['displayLabel'];
+            ?>
+            <div class="ypo_option_container">
+                <div class="ypo_option_label"><?php echo esc_html($displayLabel); ?> :</div>
+                <div class="ypo_choice_container">
+                    <?php $i = 0; ?>
+                    <?php foreach ($option['choices'] as $choice): ?>
+                        <?php
+                            $i++;
+                            $title = $choice["title"];
+                            $value = $choice["value"];
+                            $color = $choice["color"];
+                        ?>
+                        <input 
+                            type="radio" 
+                            name="<?php echo esc_attr($name); ?>" 
+                            value="<?php echo esc_attr($value); ?>"  
+                            id="<?php echo esc_attr($name . $i); ?>" 
+                        />
 
-        $name = "ypo_" . $option['label'];
-        $displayLabel = $option ['displayLabel'];
+                        <?php if (strtolower($option['label']) == "color"): ?>
+                            <label 
+                                class="ypo_radio_btn_color" 
+                                for="<?php echo esc_attr($name . $i); ?>" 
+                                style="background-color: <?php echo esc_attr($color); ?>;"
+                            >
+                                <div class="ypo_tooltip_text"><?php echo esc_html($title); ?></div>
+                            </label>
+                        <?php else: ?>
+                            <label 
+                                class="ypo_radio_btn" 
+                                for="<?php echo esc_attr($name . $i); ?>" 
+                                style="border-color: <?php echo esc_attr($color); ?>; color: <?php echo esc_attr($color); ?>"
+                            >
+                                <?php echo esc_html($title); ?>
+                                <div class="ypo_tooltip_text"><?php echo esc_html($title); ?></div>
+                            </label>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
-        $html_str .= "<div class='ypo_option_label'>$displayLabel : </div>";
-        $html_str .= "<div class='ypo_choice_container' >";
-        
-        $i = 0;
-        foreach ($option['choices'] as $choice){
-            $i += 1;
-            $title = $choice["title"];
-            $value = $choice["value"];
-            $color = $choice["color"];
-
-            $html_str .= "<Input type='radio' name='$name' value='$value'  id='$name$i' />";
-
-            if (strtolower($option['label']) == "color") {
-                $html_str .= "<label class='ypo_radio_btn_color' for='$name$i' style='background-color: $color;'>
-                    <div class='ypo_tooltip_text'>$title</div>
-                </label>";
-            }
-            else {
-                $html_str .= "<label class='ypo_radio_btn' for='$name$i' style='border-color: $color;  color: $color'>$title
-                    <div class='ypo_tooltip_text'>$title</div>
-                </label>";
-            }
-            
-        }
-
-        $html_str .= "</div></div>";
-    }
-
-    $html_str .= "</div>";
-
-    echo $html_str;
-
+    <?php
 }
 
 function ypo_validate_before_add_to_cart ($passed, $product_id, $quantity) {
@@ -81,4 +91,4 @@ function ypo_validate_before_add_to_cart ($passed, $product_id, $quantity) {
 }
 
 add_action("woocommerce_before_add_to_cart_button", "ypo_add_custom_field_in_product");
-add_filter("woocommerce_add_to_cart_validation", "ypo_validate_before_add_to_cart", 15, 3);
+// add_filter("woocommerce_add_to_cart_validation", "ypo_validate_before_add_to_cart", 15, 3);
