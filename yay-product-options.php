@@ -33,7 +33,7 @@ function ypo_deactivate_plugin() {
 function ypo_load_plugin() {
     require_once YPO_PLUGIN_PATH . "includes/rest-api-controller.php";
     require_once YPO_PLUGIN_PATH . "includes/admin-menu.php";
-    // require_once YPO_PLUGIN_PATH . "includes/extends-woo-product.php";
+    require_once YPO_PLUGIN_PATH . "includes/extends-woo-product.php";
     // require_once YPO_PLUGIN_PATH . "includes/extends-woo-order.php";
 }
 

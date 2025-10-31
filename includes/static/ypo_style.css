@@ -1,0 +1,139 @@
+.ypo_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.ypo_option_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ypo_choice_container {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    position: relative;
+    cursor: pointer;
+    margin: 8px;
+    width: fit-content;
+    height: fit-content;
+}
+
+
+.ypo_choice_container input[type = "radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.ypo_radio_btn {
+    margin: 5px 10px;
+    border-radius: 10%;
+    border-width: 2px;
+    border-style: solid;
+    width: 70px;
+    height: 30px;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.ypo_radio_btn::before {
+    content: "";
+    position: absolute;
+    width: 74px;
+    height: 34px;
+    border-radius: 10px;
+    border: 3px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+.ypo_radio_btn::after {
+    content: "✔";
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transform: translate(-60%, -50%);
+    font-size: 2em;
+    color: rgb(0, 0, 0);
+    font-weight: 900;
+    display: none;
+    transition: all 0.3s ease;
+}
+
+
+.ypo_choice_container input[type="radio"]:checked + label.ypo_radio_btn::before {
+    border-color: rgb(79, 79, 79); 
+}
+
+.ypo_choice_container input[type="radio"]:checked + label.ypo_radio_btn::after {
+    display: block; 
+}
+
+.ypo_radio_btn_color {
+    margin: 5px 10px;
+    border-radius: 50%;
+    border-width: 2px;
+    border-color: transparent;
+    border-style: solid;
+    box-shadow: 3px;
+    width: 40px;
+    height: 40px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.ypo_radio_btn_color::after {
+    content: "✔";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.ypo_choice_container input[type="radio"]:checked + label.ypo_radio_btn_color {
+    border-color: black; 
+}
+
+.ypo_choice_container input[type="radio"]:checked + label.ypo_radio_btn_color::after {
+    display: block; 
+}
+
+.ypo_tooltip_text {
+    visibility: hidden;
+    width: max-content;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 5px 5px;
+    border-radius: 6px;
+    position: absolute;
+    font-size: small;
+    z-index: 1;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ypo_tooltip_text::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.ypo_radio_btn_color:hover .ypo_tooltip_text, .ypo_radio_btn:hover .ypo_tooltip_text {
+    visibility: visible;
+  }

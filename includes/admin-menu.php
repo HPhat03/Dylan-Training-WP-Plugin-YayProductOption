@@ -84,6 +84,10 @@ function ypo_add_entry_as_module( $tag, $handle ) {
     return $tag;
 }
 
+function ypo_enqueue_shop_script() {
+    wp_enqueue_style("ypo-admin-style", YPO_PLUGIN_URL . '/includes/static/ypo_style.css', [], '1.0.0');
+}
+
 add_action( 'admin_footer', 'ypo_render_dev_refresh', 5 );
 add_filter( 'script_loader_tag', 'ypo_add_entry_as_module', 10, 3 );
 add_action('admin_enqueue_scripts', "ypo_enqueue_admin_vite_app");
@@ -91,5 +95,6 @@ add_action('admin_enqueue_scripts', "ypo_enqueue_admin_vite_app");
 
 add_action('admin_menu', "ypo_add_admin_menu");
 // add_action('admin_enqueue_scripts', "ypo_enqueue_admin_app");
+add_action('wp_enqueue_scripts', 'ypo_enqueue_shop_script');
 
 
