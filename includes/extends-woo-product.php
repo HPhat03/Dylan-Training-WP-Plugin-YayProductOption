@@ -91,4 +91,4 @@ function ypo_validate_before_add_to_cart ($passed, $product_id, $quantity) {
 }
 
 add_action("woocommerce_before_add_to_cart_button", "ypo_add_custom_field_in_product");
-// add_filter("woocommerce_add_to_cart_validation", "ypo_validate_before_add_to_cart", 15, 3);
+add_filter("woocommerce_add_to_cart_validation", "ypo_validate_before_add_to_cart", 15, 3);
